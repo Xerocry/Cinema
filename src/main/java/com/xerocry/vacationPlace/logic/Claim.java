@@ -17,12 +17,10 @@ import java.util.Date;
  */
 public class Claim extends DomainObject {
 
-    private String tourOwnerName;
     private Integer tourOwnerId;
     
     private ArrayList<Customer> customers;
     private Date requestDate;
-    private String tourName;
     private String status;
 
 
