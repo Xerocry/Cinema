@@ -6,9 +6,9 @@ package com.xerocry.vacationPlace.controllers;
 
 import com.xerocry.vacationPlace.Util;
 import com.xerocry.vacationPlace.logic.Claim;
-import com.xerocry.vacationPlace.logic.Company;
+import com.xerocry.vacationPlace.logic.companies.Company;
 import com.xerocry.vacationPlace.logic.EntityDeleteParams;
-import com.xerocry.vacationPlace.logic.TravelAgency;
+import com.xerocry.vacationPlace.logic.companies.TravelAgency;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
 import com.xerocry.vacationPlace.view.ClaimAddParams;
 import org.springframework.stereotype.Controller;

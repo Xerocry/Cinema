@@ -4,12 +4,15 @@
  */
 package com.xerocry.vacationPlace.repository.mappers;
 
-import com.xerocry.vacationPlace.logic.Company;
-import com.xerocry.vacationPlace.logic.CompanyCreator;
+import com.xerocry.vacationPlace.logic.companies.Company;
+import com.xerocry.vacationPlace.logic.companies.CompanyCreator;
+import com.xerocry.vacationPlace.logic.companies.CompanyType;
 import com.xerocry.vacationPlace.repository.DataGateway;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -106,6 +109,25 @@ public class CompanyMapper implements AbstractMapper<Company> {
 
         return newCompany;
     }
+
+
+    public List<Company> findByType(CompanyType type) throws SQLException {
+        List<Company> allUsers = new ArrayList<>();
+
+        String selectSQL = "SELECT * FROM company where companyType =?;";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+        preparedStatement.setInt(1, type.getIntValue());
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            allUsers.add(findById(resultSet.getInt("id")));
+        }
+
+        return allUsers;
+    }
+
+
 
     /**
      * Retrieves list of Company instances

@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class ToursController {
      * @return name of jsp page to view
      */
     @RequestMapping( value = "/**/showtours", method = RequestMethod.GET)
-    public String showTours(Model model){
+    public String showTours(Model model) throws SQLException {
                
         VacationPlaceRepository repository = new VacationPlaceRepository();
         List<Tour> allTours = repository.findAll();
@@ -102,7 +103,7 @@ public class ToursController {
      * @return name of jsp page to view
      */
     @RequestMapping(value = "/**/addtour", method = RequestMethod.POST)
-    public String addTour(TourAddParams tourAddParams, Model model ){
+    public String addTour(TourAddParams tourAddParams, Model model ) throws SQLException {
 
         VacationPlaceRepository repository = new VacationPlaceRepository();
         
@@ -146,7 +147,7 @@ public class ToursController {
      * @return name of jsp page to view
      */
      @RequestMapping(value = "/**/deletetour", method = RequestMethod.POST)
-     public String deleteTour(EntityDeleteParams tourDeleteParams, Model model){
+     public String deleteTour(EntityDeleteParams tourDeleteParams, Model model) throws SQLException {
                  
         System.out.println("****[Delete Tour]************************************************");
         System.out.println("Id for delete = " + tourDeleteParams.getDeleteId());        

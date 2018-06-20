@@ -5,8 +5,13 @@
 package com.xerocry.vacationPlace.repository;
 
 import com.xerocry.vacationPlace.logic.*;
+import com.xerocry.vacationPlace.logic.companies.Company;
+import com.xerocry.vacationPlace.logic.companies.CompanyType;
+import com.xerocry.vacationPlace.logic.companies.TourOperator;
+import com.xerocry.vacationPlace.logic.companies.TravelAgency;
 import com.xerocry.vacationPlace.view.ClaimAddParams;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +24,8 @@ import java.util.List;
  */
 public interface Repository {
 
+
+    public List<Subscription> findSubscriptions(TravelAgency agency) throws SQLException;
 
     /**
      * Finds list of claims by operator id
@@ -84,7 +91,7 @@ public interface Repository {
      * @param companyType type of company 
      * @return list of companies with selected companyType
      */
-    public List<Company> findCompanyByType(CompanyType companyType);
+    public List<Company> findCompanyByType(CompanyType companyType) throws SQLException;
 
     /**
      * Retrives current company
@@ -113,7 +120,7 @@ public interface Repository {
      *
      * @return list of all available tour operators 
      */
-    public List<Company> findTourOperators();
+    public List<Company> findTourOperators() throws SQLException;
 
     /**
      * Retrives all available travel agencies
@@ -128,7 +135,7 @@ public interface Repository {
      * @param agency selected agency for finding attendant operators
      * @return list of attendant tour operators
      */
-    public List<TourOperator> findAttendantOperators(TravelAgency agency);
+    public List<TourOperator> findAttendantOperators(TravelAgency agency) throws SQLException;
 
     /**
      * Retrives list of attendant tour operators
@@ -145,7 +152,7 @@ public interface Repository {
      * @param travelAgencyId id of travel agency
      * @param tourOperatorId id of tour operator
      */
-    public void addSubscription(Integer travelAgencyId, Integer tourOperatorId );
+    public void addSubscription(Integer travelAgencyId, Integer tourOperatorId ) throws SQLException;
 
     /**
      * Removes subscription of travel agency for tour operators tours
@@ -153,7 +160,7 @@ public interface Repository {
      * @param travelAgencyId id of travel agency
      * @param tourOperatorId of tour operator
      */
-    public void removeSubscription(Integer travelAgencyId, Integer tourOperatorId);
+    public void removeSubscription(Integer travelAgencyId, Integer tourOperatorId) throws SQLException;
 
     /**
      * Finds Tour By tourId as subscribedCompanyId 
@@ -197,14 +204,14 @@ public interface Repository {
      * @param type type of tour
      * @return list of tours with selected type
      */
-    public List<Tour> findToursByType(TourType type);
+    public List<Tour> findToursByType(TourType type) throws SQLException;
 
     /**
      * Retrives all tours and hotels
      *
      * @return List of tours and hotels
      */
-    public List<Tour> findAll();
+    public List<Tour> findAll() throws SQLException;
 
     /**
      * Retrives list of tours by parameters
@@ -250,4 +257,6 @@ public interface Repository {
     void updateAll();
     void clearAll();
     void dropAll();
+
+    void changeSubscriptionStatus(Integer currentCompany, Integer selectedOperator, SubscriptionStatus selectedStatus) throws SQLException;
 }

@@ -4,11 +4,10 @@
  */
 package com.xerocry.vacationPlace.controllers;
 
-import com.xerocry.vacationPlace.logic.Company;
+import com.xerocry.vacationPlace.logic.companies.Company;
 import com.xerocry.vacationPlace.logic.Tour;
-import com.xerocry.vacationPlace.logic.TourOperator;
+import com.xerocry.vacationPlace.logic.companies.TourOperator;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
-import com.xerocry.vacationPlace.repository.mappers.TourMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

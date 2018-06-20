@@ -5,10 +5,11 @@
 package com.xerocry.vacationPlace.view;
 
 
-import com.xerocry.vacationPlace.logic.TourOperator;
-import com.xerocry.vacationPlace.logic.TravelAgency;
+import com.xerocry.vacationPlace.logic.companies.TourOperator;
+import com.xerocry.vacationPlace.logic.companies.TravelAgency;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,7 +147,7 @@ public class ClaimAddParams {
         this.selectedOperatorId = selectedOperatorId;
     }
     
-    public ArrayList<TourOperator> getAttendentOperators(){
+    public List<TourOperator> getAttendentOperators() throws SQLException {
                 
         VacationPlaceRepository companyRepository = new VacationPlaceRepository();
         TravelAgency agency = (TravelAgency) companyRepository.findCurrentCompany();

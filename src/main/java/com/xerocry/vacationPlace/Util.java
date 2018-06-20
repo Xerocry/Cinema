@@ -1,7 +1,7 @@
 package com.xerocry.vacationPlace;
 
-import com.xerocry.vacationPlace.logic.Company;
-import com.xerocry.vacationPlace.logic.TravelAgency;
+import com.xerocry.vacationPlace.logic.companies.Company;
+import com.xerocry.vacationPlace.logic.companies.TravelAgency;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -140,4 +140,23 @@ public final class Util {
         Company currentCompany = repository.findCurrentCompany();
         return isLoggedAgency(currentCompany);
     }
+
+    /**
+     * Gets user company id as string
+     *
+     * @return  user company id as string
+     */
+    public static String getUserIdAsStr(){
+        return (String) getSession().getAttribute(USER_TAG);
+    }
+
+    /**
+     * Gets user company id as long
+     *
+     * @return Gets user company id as long
+     */
+    public static int getUserIdAsInteger(){
+        return Integer.parseInt(getUserIdAsStr());
+    }
+
 }

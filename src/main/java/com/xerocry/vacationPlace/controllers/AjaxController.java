@@ -5,8 +5,8 @@
 package com.xerocry.vacationPlace.controllers;
 
 import com.xerocry.vacationPlace.logic.Tour;
-import com.xerocry.vacationPlace.logic.TourOperator;
-import com.xerocry.vacationPlace.logic.TravelAgency;
+import com.xerocry.vacationPlace.logic.companies.TourOperator;
+import com.xerocry.vacationPlace.logic.companies.TravelAgency;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class AjaxController {
         @RequestMapping(value = "**/toursfromoperator", method = RequestMethod.GET)
 	public @ResponseBody
 	List<Tour> toursFromOperators(
-			@RequestParam(value = "operatorId", required = true) String operatorId) {
+			@RequestParam(value = "operatorId", required = true) String operatorId) throws SQLException {
 		
             long id = Long.parseLong(operatorId);
             System.out.println("****[AJAX]****************************************");
@@ -78,7 +79,7 @@ public class AjaxController {
          */
         @RequestMapping(value = "**/findtouroperators", method = RequestMethod.GET)
 	public @ResponseBody
-	List<TourOperator> findAttendantTourOperators(){
+	List<TourOperator> findAttendantTourOperators() throws SQLException {
          
         System.out.println("****[AJAX]****************************************");
         System.out.println(" GET AJAX FIND OPERATORS REQUEST");        
@@ -94,8 +95,8 @@ public class AjaxController {
         catch(ClassCastException ex) {
             return new ArrayList<>();
         }
-        
-         
+
+
      }
         
 }

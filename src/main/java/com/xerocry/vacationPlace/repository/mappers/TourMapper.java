@@ -4,19 +4,12 @@
  */
 package com.xerocry.vacationPlace.repository.mappers;
 
-import com.xerocry.vacationPlace.logic.Company;
-import com.xerocry.vacationPlace.logic.DomainObject;
 import com.xerocry.vacationPlace.logic.Tour;
 import com.xerocry.vacationPlace.repository.DataGateway;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Xerocry

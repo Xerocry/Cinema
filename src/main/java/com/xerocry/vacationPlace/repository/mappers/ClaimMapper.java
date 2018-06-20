@@ -93,7 +93,7 @@ public class ClaimMapper implements AbstractMapper<Claim> {
 
         Tour tour = tourMapper.findById(tourId);
 
-        Claim newClaim = new Claim(id, tour.getTourOperatorTourId(), requestDate, status, tour);
+        Claim newClaim = new Claim(tour.getTourOperatorTourId(), requestDate, status, tour);
 
         loadedClaimMap.put(id, newClaim);
 

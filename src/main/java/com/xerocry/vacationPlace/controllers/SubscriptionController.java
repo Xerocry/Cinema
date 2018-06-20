@@ -5,17 +5,19 @@
 package com.xerocry.vacationPlace.controllers;
 
 import com.xerocry.vacationPlace.Util;
-import com.xerocry.vacationPlace.logic.Company;
-import com.xerocry.vacationPlace.logic.SubscriptionSelector;
-import com.xerocry.vacationPlace.logic.TourOperator;
-import com.xerocry.vacationPlace.logic.TravelAgency;
+import com.xerocry.vacationPlace.logic.*;
+import com.xerocry.vacationPlace.logic.companies.Company;
+import com.xerocry.vacationPlace.logic.companies.TourOperator;
+import com.xerocry.vacationPlace.logic.companies.TravelAgency;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -47,7 +49,7 @@ public class SubscriptionController {
      * @return name of jsp page to view
      */ 
     @RequestMapping( value="/**/showsubscriptions", method = RequestMethod.GET)
-    public String showSubscriptions(Model model){
+    public String showSubscriptions(Model model) throws SQLException {
                         
         this.showAllSubscriptions(model);
          
@@ -63,11 +65,11 @@ public class SubscriptionController {
      * @return name of jsp page to view
      */
     @RequestMapping(value = "/**/addsubscription", method = RequestMethod.POST)
-    public String addSubscriptions(SubscriptionSelector selector, Model model){
+    public String addSubscriptions(SubscriptionSelector selector, Model model) throws SQLException {
                                 
-        TourOperator selectedOperator = (TourOperator) selector.getSelectedOperator();
-
         VacationPlaceRepository repository = new VacationPlaceRepository();
+        TourOperator selectedOperator = (TourOperator) repository.findCompanyById(selector.getSelectedOperatorId());
+
         TravelAgency currentCompany = (TravelAgency) repository.findCurrentCompany();
                 
         currentCompany.addAttendantOperator(selectedOperator);
@@ -86,7 +88,7 @@ public class SubscriptionController {
      * @return 
      */
     @RequestMapping(value = "/**/removesubscription", method = RequestMethod.POST)
-    public String removeSubscriptions(SubscriptionSelector remover, Model model){
+    public String removeSubscriptions(SubscriptionSelector remover, Model model) throws SQLException {
         
         TourOperator selectedOperator = (TourOperator) remover.getSelectedOperator();
 
@@ -100,6 +102,25 @@ public class SubscriptionController {
         return "subscriptions";
         
     }
+
+    @RequestMapping(value = "/**/changesubscriptionstatus", method = RequestMethod.POST)
+    public String changeSubscriptionStatus(SubscriptionSelector changer, Model model) throws SQLException {
+
+        model.addAttribute("statuses", Arrays.asList(SubscriptionStatus.APPROVED.toString(),
+                SubscriptionStatus.REJECTED.toString(), SubscriptionStatus.WAITING_FOR_CORRECTION.toString()));
+        TourOperator selectedOperator = (TourOperator) changer.getSelectedOperator();
+        SubscriptionStatus selectedStatus = changer.getSelectedStatus();
+
+        VacationPlaceRepository repository = new VacationPlaceRepository();
+        TravelAgency currentCompany = (TravelAgency) repository.findCurrentCompany();
+
+        repository.changeSubscriptionStatus(currentCompany.getId(), selectedOperator.getId(), selectedStatus);
+
+        this.showAllSubscriptions(model);
+
+        return "subscriptions";
+
+    }
     
     /**
      *
@@ -108,7 +129,7 @@ public class SubscriptionController {
      * 
      * @param model model model of domain i.e. key-value storage of entities to view and fill in jsp pages
      */ 
-    private void showAllSubscriptions(Model model){
+    private void showAllSubscriptions(Model model) throws SQLException {
 
         VacationPlaceRepository repository = new VacationPlaceRepository();
         List<Company> operators = repository.findTourOperators();
@@ -118,11 +139,14 @@ public class SubscriptionController {
         SubscriptionSelector selector = new SubscriptionSelector();       
         selector.setOperators(getOperatorsForAddition(currentCompany, operators));
         selector.setSelectedAgencyId(currentCompany.getId());
+        List<Subscription> subscriptions = repository.findSubscriptions((TravelAgency) currentCompany);
+        selector.setSubscriptions(subscriptions);
                         
         SubscriptionSelector remover = new SubscriptionSelector();
         remover.setOperators(getOperatorsForRemove(currentCompany));         
         
         model.addAttribute("currentCompany", currentCompany);
+        model.addAttribute("subscriptions", selector.getSubscriptions());
         model.addAttribute("loggedAgency", Util.isLoggedAgency(currentCompany));
         model.addAttribute("subscriptSelector", selector);
         model.addAttribute("subscriptRemover", remover);
@@ -137,9 +161,9 @@ public class SubscriptionController {
      * @param allOperators list of all tour operators
      * @return list companies to subscribe
      */    
-    private static List<Company> getOperatorsForAddition(Company company, List<Company> allOperators){
+    private static List<Company> getOperatorsForAddition(Company company, List<Company> allOperators) throws SQLException {
                 
-        List<Company> operatorsForAddition = new ArrayList<Company>();
+        List<Company> operatorsForAddition = new ArrayList<>();
         if( company instanceof TravelAgency ){
             
             TravelAgency travelAgency = (TravelAgency) company;
@@ -162,7 +186,7 @@ public class SubscriptionController {
      * @param company concrete company
      * @return list of companies to remove subcription
      */    
-    private static List<Company> getOperatorsForRemove(Company company){
+    private static List<Company> getOperatorsForRemove(Company company) throws SQLException {
         List<Company> operatorsForRemove = new ArrayList<Company>();
         if( company instanceof TravelAgency ){
             TravelAgency agency = (TravelAgency) company;

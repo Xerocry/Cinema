@@ -17,8 +17,6 @@ import java.util.Date;
  */
 public class Claim extends DomainObject {
 
-    private Integer id;
-
     private String tourOwnerName;
     private Integer tourOwnerId;
     
@@ -32,11 +30,7 @@ public class Claim extends DomainObject {
     private int duration;
     private int accomodation;
     
-    private boolean loadTourOwner = false;
-    private boolean loadTourName = false;
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -45,8 +39,7 @@ public class Claim extends DomainObject {
         customers = new ArrayList<>();
     }
 
-    public Claim(Integer id, Integer tourOwnerId, Date requestDate, String status, Tour tourOperatorTour) {
-        this.id = id;
+    public Claim(Integer tourOwnerId, Date requestDate, String status, Tour tourOperatorTour) {
         this.tourOwnerId = tourOwnerId;
         this.requestDate = requestDate;
         this.status = status;

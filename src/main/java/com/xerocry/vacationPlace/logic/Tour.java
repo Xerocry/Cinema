@@ -24,7 +24,6 @@ public class Tour extends DomainObject {
 
     private Integer tourOperatorId = 0;
 
-    private String name;
     private String beginDate;
     private String endDate;
     private String country;
@@ -52,7 +51,7 @@ public class Tour extends DomainObject {
         StringBuilder builder = new StringBuilder();
         builder.append(this.getId());
         builder.append(" -- ");
-        builder.append(this.getName());
+        builder.append(this.getTourName());
         return builder.toString();
     }
 

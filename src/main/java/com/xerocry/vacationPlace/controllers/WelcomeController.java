@@ -6,7 +6,7 @@ package com.xerocry.vacationPlace.controllers;
 
 import com.xerocry.vacationPlace.Util;
 import com.xerocry.vacationPlace.logic.Claim;
-import com.xerocry.vacationPlace.logic.Company;
+import com.xerocry.vacationPlace.logic.companies.Company;
 import com.xerocry.vacationPlace.logic.EntityDeleteParams;
 import com.xerocry.vacationPlace.logic.User;
 import com.xerocry.vacationPlace.repository.VacationPlaceRepository;
@@ -48,7 +48,6 @@ public class WelcomeController {
 
         model.addAttribute("user", new User());
         System.out.println("Index method called");
-
 
         return "index";
     }

@@ -1,0 +1,61 @@
+/* 
+    Document   : claims
+    Created on : 05.04.2014, 20:14:38
+    Author     : rudolph
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+ 
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+
+
+ /*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+
+/*
+* Form content
+*/
+.form-addclaim {
+  max-width: 330px;
+  padding: 10px;
+  margin: 10px;
+    
+}
+.form-addclaim .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;    
+  font-size: 16px;
+}
