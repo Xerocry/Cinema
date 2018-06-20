@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.xerocry.vacationPlace.logic;
+package com.xerocry.vacationPlace.logic.companies;
+
+import com.xerocry.vacationPlace.logic.DomainObject;
 
 /**
  *
