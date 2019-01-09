@@ -1,13 +1,12 @@
 <%-- 
     Document   : subscriptions
     Created on : 30.03.2014, 21:07:50
-    Author     : rudolph
+    Author     : Xerocry
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +19,6 @@
         <script  src="<c:url value="/webresources/styles/js/modal.js"/>" type="text/javascript"></script> 
     </head>
     <body>
-               
          
          <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
           <div class="container-fluid">
@@ -36,9 +34,13 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
+                <c:if test="${loggedAgency == true}">
                 <li><a href="#" id="addsubscription">Add Subscription</a></li>                  
-                <li><a href="#" id="removesubscription">Remove Subscription</a></li>                
+                <li><a href="#" id="removesubscription">Remove Subscription</a></li>
+                </c:if>
+                <c:if test="${loggedAgency == false}">
                 <li><a href="#" id="changesubscription">Change Subscription</a></li>
+                </c:if>
                 <li><a href="welcome/claims/show">Claims</a></li>
                 <li><a href="welcome/logout">Log Out</a></li>                
               </ul>
@@ -81,6 +83,42 @@
                  </div>
                  </c:when>
                 <c:otherwise>
+
+
+                    <h2 class="sub-header">All Agencies subscribed on ${currentCompany.name}</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Agency</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:set var="counter" scope="request" value="${1}"/>
+                            <c:forEach var="subscription" items="${subscriptSelector.subscriptions}">
+                                <tr>
+                                    <td> ${counter} </td>
+                                    <td> ${subscription.requesterAgency.name}
+                                        <c:set var="counter" scope="request" value="${counter + 1}"/>
+                                    </td>
+                                    <td> ${subscription.status.toString()} </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
+
+
+
+
                         Operators view is not supported yet!!!
                 </c:otherwise>    
              </c:choose >
@@ -106,8 +144,8 @@
                                      <td>
                                          <form:select path="selectedOperatorId"
                                                       cssClass="form-control" >
-                                             <form:options items="${subscriptSelector.operators}"
-                                                           itemValue="id" itemLabel="name"/>
+                                             <form:options items="${subscriptSelector.subscriptions}"
+                                                           itemValue="id" itemLabel="requesterId"/>
                                          </form:select>
                                      </td>
                                      <td> <form:label path="selectedStatus" cssClass="form-addsubscript"> Status </form:label></td>

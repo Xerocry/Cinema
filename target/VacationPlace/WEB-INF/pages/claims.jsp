@@ -38,12 +38,12 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
-                <c:if test="${loggedAgency == true}">  
                 <li><a href="welcome/showsubscriptions">Subscriptions</a></li>
+                <c:if test="${loggedAgency == true}">
                 <li><a href="#" id="addclaimopen">Add Claim</a></li>
                 </c:if>
-                <li><a href="welcome/showtours">Tours</a></li>                
-                <li><a href="welcome/claims/show">Claims Update</a></li> 
+                <li><a href="welcome/showtours">Tours</a></li>
+                <li><a href="welcome/claims/show">Claims Update</a></li>
                 <li><a href="welcome/logout">Log Out</a></li>
               </ul>
               <form class="navbar-form navbar-right">
